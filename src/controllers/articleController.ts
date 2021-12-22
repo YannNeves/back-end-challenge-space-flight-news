@@ -37,7 +37,7 @@ export const store = async (req: Request, res: Response) => {
   if (newArticle instanceof Error) {
     res.status(404).json({ message: 'Erro ao atualizar'});
   } else {
-    res.status(404).json({ message: 'Cadastrado com sucess', newArticle });
+    res.status(200).json({ message: 'Cadastrado com sucess', newArticle });
   }
 }
 
@@ -55,7 +55,7 @@ export const update = async (req: Request, res: Response) => {
   if (updatedArticle instanceof Error) {
     res.status(404).json({ message: 'Erro ao atualizar'});
   } else {
-    res.status(404).json({ message: 'Atualizado com sucesso', updatedArticle});
+    res.status(200).json({ message: 'Atualizado com sucesso', updatedArticle});
   }
 }
 
