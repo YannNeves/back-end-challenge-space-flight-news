@@ -1,0 +1,256 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/YannNeves/back-end-challenge-space-flight-news/1.0.0
+  - description: Running Project Localy
+    url: http://localhost:4000
+info:
+  description: This is a simple API
+  version: "1.0.0"
+  title: Simple Back End Challenge Space Flight News API
+  contact:
+    email: yannvr@hotmail.com
+tags:
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /:
+    get:
+      tags:
+        - developers
+      summary: test url
+      operationId: testUrl
+      description: |
+        You can test if the project is running correctly
+      responses:
+        '200':
+          description: the project is running
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: '"message": "Back-end Challenge 2021 🏅 - Space Flight News"'
+  /articles:
+    get:
+      tags:
+        - developers
+      summary: searches all articles
+      operationId: getAllArticles
+      description: |
+        By passing in the appropriate options, you can paginate the
+        available articles in the system 
+      parameters:
+        - in: query
+          name: skip
+          description: number of records to skip for pagination
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - developers
+      summary: adds an article item
+      operationId: addArticle
+      description: Adds an item to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: invalid input, object invalid
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+        description: Article item to add
+  /articles/{id}:
+    get:
+        tags:
+          - developers
+        summary: searches one article
+        operationId: getOneArticle
+        description: |
+          By passing the id or _id get an article
+        parameters:
+          - in: path
+            name: id
+            description: pass an id or _id in parameter
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: search results matching criteria
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Article'
+          '400':
+            description: bad input parameter
+    put:
+      tags:
+        - developers
+      summary: update an article item
+      operationId: updateArticle
+      description: Update an item to the system
+      parameters:
+          - in: path
+            name: id
+            description: pass an id or _id in parameter
+            required: true
+            schema:
+              type: string
+      responses:
+        '201':
+          description: item updated
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+        description: Article item to add
+    delete:
+        tags:
+          - developers
+        summary: delete one article
+        operationId: deleteArticle
+        description: |
+          By passing the id or _id delete an article
+        parameters:
+          - in: path
+            name: id
+            description: pass an id or _id in parameter
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: search results matching criteria
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Article'
+          '400':
+            description: bad input parameter
+  /articles-populate:
+    get:
+      tags:
+        - developers
+      summary: articles populate url
+      operationId: articlesPopulateUrl
+      description: |
+        You can populate the articles of space flight news in the project
+      responses:
+        '200':
+          description: space flight news populated
+          content:
+            text/plain:
+              schema:
+                type: string
+                example:  Dados populados com sucesso
+        '400':
+          description: error to access the server
+          content:
+            text/plain:
+              schema:
+                type: string
+                example:  Erro no servidor
+components:
+  schemas:
+    Article:
+      type: object
+      required:
+        - title
+        - url
+        - imageUrl
+        - newsSite
+        - publishedAt
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          example: 61c07b5e9cec44cb0cad25bc
+        id:
+          type: integer
+          example: 13370
+        featured:
+          type: boolean
+          example: false
+          default: false
+        title:
+          type: string
+          example: Engine computer problem delays first SLS launch
+        url:
+          type: string
+          example: https://spacenews.com/engine-computer-problem-delays-first-sls-launch/
+        imageUrl:
+          type: string
+          example: https://spacenews.com/wp-content/uploads/2021/12/sls-dec21.jpg
+        newsSite:
+          type: string
+          example: SpaceNews
+        summary:
+          type: string
+          example: A malfunctioning computer in one of the four main engines of the Space Launch System will delay that vehicle’s first launch to no earlier than March.
+        publishedAt:
+          type: string
+          format: date-time
+          example: '2021-12-20T11:26:42.000Z'
+        launches: 
+          type: array
+          items:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: string
+                format: uuid
+                example: 603f47d2-bc2b-4bab-b623-294c2cbf899c
+              provider: 
+                type: string
+                example: Launch Library 2
+        events: 
+          type: array
+          items:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: integer
+                example: 293
+              provider: 
+                type: string
+                example: Launch Library 2
