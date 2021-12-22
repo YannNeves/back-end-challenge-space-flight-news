@@ -22,6 +22,6 @@ Buscar dados da API Space Flight News e popular o banco, permitir realizar consu
 `npm run start-dev`
 
 ### Documentação:
-Simple Back End Challenge Space Flight News API [https://app.swaggerhub.com/apis-docs/YannNeves/back-end-challenge-space-flight-news/1.0.0]
+Veja mais em [Simple Back End Challenge Space Flight News API Documentation](https://app.swaggerhub.com/apis-docs/YannNeves/back-end-challenge-space-flight-news/1.0.0).
 
-This is a challenge by Coodesh
+## This is a challenge by Coodesh
